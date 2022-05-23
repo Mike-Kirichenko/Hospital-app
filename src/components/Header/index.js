@@ -8,9 +8,16 @@ const Header = ({ actionType }) => {
       {actionType === "login" && (
         <>
           <h2 className="main-headings">Enter the system</h2>
+        </>
+      )}
+
+      {actionType === "viewVisits" && (
+        <>
+          <h2 className="main-headings">Visits</h2>
           <button id="exit">Exit</button>
         </>
       )}
+
       {actionType === "register" && (
         <h2 className="main-headings">Register in the system</h2>
       )}
