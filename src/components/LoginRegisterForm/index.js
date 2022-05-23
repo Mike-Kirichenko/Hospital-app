@@ -1,27 +1,37 @@
 import { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import ApiContext from "../../contexts/ApiContext";
+import TokenContext from "../../contexts/ApiContext";
 import "./login-register-form.scss";
 
 const LoginRegisterForm = ({ actionType, onSetToken }) => {
-  const { register, login } = useContext(ApiContext);
+  const api = useContext(ApiContext);
+  const token = useContext(TokenContext);
+  const [errorMsg, setErrorMsg] = useState(null);
 
-  const [error, setError] = useState(false);
+  if (token) return <Navigate to="/" />;
 
-  const handleSubmit = (event, actionType) => {
+  const handleSubmit = async (event, actionType) => {
     event.preventDefault();
 
-    const formData = new FormData(event.target);
-    const dataObject = {};
-
     if (actionType === "login") {
-      for (const pair of formData.entries()) {
-        const [key, value] = pair;
-        if (!value) {
-          setError(true);
-          break;
+      const login = event.target[0].value;
+      const password = event.target[1].value;
+      if (!login || !password) setErrorMsg("All inputs required");
+      else {
+        const dataObject = { email: login, password };
+
+        try {
+          const loggedIn = await api.login(dataObject);
+          if (loggedIn) {
+            const { token } = loggedIn;
+            onSetToken(token);
+            return <Navigate to="/" />;
+          }
+        } catch (err) {
+          const { msg } = err.response.data;
+          setErrorMsg(msg);
         }
-        dataObject[key] = value;
       }
     }
   };
@@ -40,8 +50,8 @@ const LoginRegisterForm = ({ actionType, onSetToken }) => {
             <h5 className="main-headings">Register in the system</h5>
           )}
 
-          {error && actionType === "login" && (
-            <div className="err-msg">Invalid Credentials</div>
+          {errorMsg && actionType === "login" && (
+            <div className="err-msg">{errorMsg}</div>
           )}
 
           <form onSubmit={(event) => handleSubmit(event, actionType)}>

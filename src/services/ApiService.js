@@ -4,7 +4,7 @@ export default class Api {
   errMsg = "Coudn't fetch";
 
   constructor() {
-    this.apibase = "http://localhost:8000/api/hospital";
+    this.apibase = "http://localhost:3000/api/hospital";
   }
 
   msg(res) {
