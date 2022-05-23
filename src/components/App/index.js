@@ -12,7 +12,7 @@ const App = () => {
           exact
           element={
             <>
-              <Header actionType="login" />
+              <Header text="Enter the system" />
               <LoginRegisterForm actionType="login" />
             </>
           }
@@ -22,7 +22,7 @@ const App = () => {
           exact
           element={
             <>
-              <Header actionType="register" />
+              <Header text="Register in the system" />
               <LoginRegisterForm actionType="register" />
             </>
           }

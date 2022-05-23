@@ -1,5 +1,6 @@
-import "./login-register-form.scss";
 import { Link } from "react-router-dom";
+import "./login-register-form.scss";
+
 const LoginRegisterForm = ({ actionType }) => {
   return (
     <main>
