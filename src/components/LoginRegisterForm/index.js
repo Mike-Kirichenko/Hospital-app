@@ -1,6 +1,31 @@
-import "./login-register-form.scss";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-const LoginRegisterForm = ({ actionType }) => {
+import ApiContext from "../../contexts/ApiContext";
+import "./login-register-form.scss";
+
+const LoginRegisterForm = ({ actionType, onSetToken }) => {
+  const { register, login } = useContext(ApiContext);
+
+  const [error, setError] = useState(false);
+
+  const handleSubmit = (event, actionType) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const dataObject = {};
+
+    if (actionType === "login") {
+      for (const pair of formData.entries()) {
+        const [key, value] = pair;
+        if (!value) {
+          setError(true);
+          break;
+        }
+        dataObject[key] = value;
+      }
+    }
+  };
+
   return (
     <main>
       <div id="login-register">
@@ -14,7 +39,12 @@ const LoginRegisterForm = ({ actionType }) => {
           {actionType === "register" && (
             <h5 className="main-headings">Register in the system</h5>
           )}
-          <form>
+
+          {error && actionType === "login" && (
+            <div className="err-msg">Invalid Credentials</div>
+          )}
+
+          <form onSubmit={(event) => handleSubmit(event, actionType)}>
             <div className="form-inp-block">
               <label htmlFor="login">Login</label>
               <input name="login" id="login" placeholder="login" />

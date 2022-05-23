@@ -30,3 +30,8 @@ main {
   text-decoration: none;
   color: inherit;
 }
+
+.err-msg {
+  color: red;
+  margin: 5% 0;
+}
