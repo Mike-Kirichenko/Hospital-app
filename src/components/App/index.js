@@ -15,8 +15,8 @@ const App = () => {
   const [token, setToken] = useState(null);
 
   return (
-    <ApiContext.Provider value={api}>
-      <TokenContext.Provider value={token}>
+    <TokenContext.Provider value={{ token, setToken }}>
+      <ApiContext.Provider value={api}>
         <Router>
           <Routes>
             <Route
@@ -35,7 +35,7 @@ const App = () => {
               element={
                 <>
                   <Header actionType="login" />
-                  <LoginRegisterForm actionType="login" onSetToken={setToken} />
+                  <LoginRegisterForm actionType="login" />
                 </>
               }
             />
@@ -51,8 +51,8 @@ const App = () => {
             />
           </Routes>
         </Router>
-      </TokenContext.Provider>
-    </ApiContext.Provider>
+      </ApiContext.Provider>
+    </TokenContext.Provider>
   );
 };
 

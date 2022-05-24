@@ -1,12 +1,12 @@
 import { useState, useContext } from "react";
 import { Link, Navigate } from "react-router-dom";
 import ApiContext from "../../contexts/ApiContext";
-import TokenContext from "../../contexts/ApiContext";
+import TokenContext from "../../contexts/TokenContext";
 import "./login-register-form.scss";
 
-const LoginRegisterForm = ({ actionType, onSetToken }) => {
+const LoginRegisterForm = ({ actionType }) => {
   const api = useContext(ApiContext);
-  const token = useContext(TokenContext);
+  const { token, setToken } = useContext(TokenContext);
   const [errorMsg, setErrorMsg] = useState(null);
 
   if (token) return <Navigate to="/" />;
@@ -25,7 +25,7 @@ const LoginRegisterForm = ({ actionType, onSetToken }) => {
           const loggedIn = await api.login(dataObject);
           if (loggedIn) {
             const { token } = loggedIn;
-            onSetToken(token);
+            setToken(token);
             return <Navigate to="/" />;
           }
         } catch (err) {

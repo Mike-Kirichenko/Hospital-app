@@ -1,5 +1,5 @@
 import "./header.scss";
-const Header = ({ actionType }) => {
+const Header = ({ actionType, setToken = false }) => {
   return (
     <header>
       <div id="logo">
