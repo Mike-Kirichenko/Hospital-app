@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "../Header";
-import LoginRegisterForm from "../LoginRegisterForm";
+import LoginForm from "../LoginRegisterForm/LoginForm";
+import RegisterForm from "../LoginRegisterForm/RegisterForm";
 import WithAuth from "../HOC/WithAuth";
 import Visits from "../Visits";
 import Api from "../../services/ApiService";
@@ -12,7 +13,7 @@ import "./app.css";
 const api = new Api();
 
 const App = () => {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("jwt") || null);
 
   return (
     <TokenContext.Provider value={{ token, setToken }}>
@@ -24,7 +25,7 @@ const App = () => {
               exact
               element={
                 <WithAuth>
-                  <Header actionType="viewVisits" />
+                  <Header text="Visits" actionType="viewVisits" />
                   <Visits />
                 </WithAuth>
               }
@@ -34,8 +35,8 @@ const App = () => {
               exact
               element={
                 <>
-                  <Header actionType="login" />
-                  <LoginRegisterForm actionType="login" />
+                  <Header text="Enter the system" />
+                  <LoginForm />
                 </>
               }
             />
@@ -44,8 +45,8 @@ const App = () => {
               exact
               element={
                 <>
-                  <Header actionType="register" />
-                  <LoginRegisterForm actionType="register" />
+                  <Header text="Register in the system" />
+                  <RegisterForm />
                 </>
               }
             />
