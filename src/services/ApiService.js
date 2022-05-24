@@ -22,28 +22,52 @@ export default class Api {
     return this.msg(res);
   }
 
-  async allVisits() {
-    const res = await axios.get(`${this.apibase}/visits`);
+  async allVisits(token) {
+    const headers = {
+      "x-access-token": token,
+    };
+
+    const res = await axios.get(`${this.apibase}/visits`, { headers });
     return this.msg(res);
   }
 
-  async createVisit(object) {
-    const res = await axios.post(`${this.apibase}/visits`, object);
+  async createVisit(object, token) {
+    const headers = {
+      "x-access-token": token,
+    };
+
+    const res = await axios.post(`${this.apibase}/visits`, object, { headers });
     return this.msg(res);
   }
 
-  async updateOne(id, object) {
-    const res = await axios.patch(`${this.apibase}/visits/${id}`, object);
+  async updateOne(id, object, token) {
+    const headers = {
+      "x-access-token": token,
+    };
+
+    const res = await axios.patch(
+      `${this.apibase}/visits/${id}`,
+      object,
+      headers
+    );
     return this.msg(res);
   }
 
-  async deleteOne(id) {
-    const res = await axios.delete(`${this.apibase}/visits/${id}`);
+  async deleteOne(id, token) {
+    const headers = {
+      "x-access-token": token,
+    };
+
+    const res = await axios.delete(`${this.apibase}/visits/${id}`, { headers });
     return this.msg(res);
   }
 
-  async getOne(id) {
-    const res = await axios.get(`${this.apibase}/visits/${id}`);
+  async getOne(id, token) {
+    const headers = {
+      "x-access-token": token,
+    };
+
+    const res = await axios.get(`${this.apibase}/visits/${id}`, { headers });
     return this.msg(res);
   }
 }
