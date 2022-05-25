@@ -32,6 +32,7 @@ const VisitInputs = () => {
       <div className="visitInputs-inp-wrapper ">
         <label htmlFor="doctor">Doctor</label>
         <select id="doctor" name="select" type="select" className="visit-input">
+          <option>---Select doctor---</option>
           {doctors.length &&
             doctors.map((doctor) => {
               const { name, id, specialty } = doctor;

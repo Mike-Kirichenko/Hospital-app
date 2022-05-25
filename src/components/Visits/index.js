@@ -4,7 +4,7 @@ import VisitInputs from "../VisitInputs";
 import VisitItem from "../VisitItem";
 import TokenContext from "../../contexts/TokenContext";
 import { Table } from "reactstrap";
-import "./visits.css";
+import "./visits.scss";
 
 const Visits = () => {
   const api = useContext(ApiContext);
@@ -33,6 +33,7 @@ const Visits = () => {
               <th>Doctor</th>
               <th>Date</th>
               <th>Complaints</th>
+              <th colSpan="2"></th>
             </tr>
           </thead>
           <tbody>

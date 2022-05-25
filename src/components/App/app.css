@@ -11,11 +11,11 @@ body * {
 :root {
   --main-color-1: #c5e9ff;
   --main-color-2: #cee8f8;
-  --shadow-color: gray;
+  --main-color-3: #c4c4c4;
 }
 
 .bottom-shadow {
-  box-shadow: 0px 3px 10px var(--shadow-color);
+  box-shadow: 0px 3px 10px var(--main-color-3);
 }
 
 .resp-img {
