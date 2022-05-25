@@ -1,0 +1,10 @@
+#visits-table {
+  width: 96%;
+  margin: auto;
+  margin-top: 4%;
+}
+#no-visits-msg {
+  margin-top: 5%;
+  text-align: center;
+  font-weight: 900;
+}
