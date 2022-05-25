@@ -1,0 +1,47 @@
+*,
+body,
+body * {
+  font-size: 1vw;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+:root {
+  --main-color: #c5e9ff;
+}
+
+.resp-img {
+  width: 100%;
+  height: auto;
+}
+main {
+  min-height: 90vh;
+  background-color: #ccebff;
+}
+
+.main-headings {
+  flex-grow: 1;
+  font-weight: 400;
+  font-size: 1.8vw;
+  text-align: center;
+}
+
+.no-decor {
+  text-decoration: none;
+  color: inherit;
+}
+
+.err-msg {
+  color: red;
+}
+
+.succ-msg {
+  color: green;
+}
+
+.err-msg,
+.succ-msg {
+  margin: 5% 0;
+}
