@@ -15,13 +15,19 @@ const VisitInputs = () => {
   useEffect(() => {
     const doctors = api.getAllDoctors(token);
     doctors.then((data) => setDoctors(data));
-  }, []);
+  }, [api, token]);
 
   return (
     <form id="visitInputs" className="bottom-shadow">
       <div className="visitInputs-inp-wrapper">
         <label htmlFor="name">Name</label>
-        <input type="text" name="name" id="name" className="visit-input" />
+        <input
+          type="text"
+          name="patient_name"
+          placeholder="Patient name"
+          id="name"
+          className="visit-input"
+        />
       </div>
       <div className="visitInputs-inp-wrapper ">
         <label htmlFor="doctor">Doctor</label>
@@ -40,6 +46,8 @@ const VisitInputs = () => {
       <div className="visitInputs-inp-wrapper ">
         <label htmlFor="date">Date</label>
         <DatePicker
+          name="date"
+          placeholderText="dd/mm/yyyy"
           id="date"
           dateFormat="dd/MM/yyyy"
           showTimeSelect
@@ -50,7 +58,13 @@ const VisitInputs = () => {
       </div>
       <div className="visitInputs-inp-wrapper ">
         <label htmlFor="text">Complaints</label>
-        <input name="text" type="text" id="text" className="visit-input" />
+        <input
+          name="text"
+          placeholder="Add patient complaints"
+          type="text"
+          id="text"
+          className="visit-input"
+        />
       </div>
       <div className="visitInputs-inp-wrapper ">
         <button id="add-button">Add Visit</button>

@@ -16,7 +16,7 @@ const Visits = () => {
         setToken(null);
         localStorage.removeItem("jwt");
       });
-  }, []);
+  }, [api, setToken, token]);
 
   if (!visits.length) return "no data...";
   return (
