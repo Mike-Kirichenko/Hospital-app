@@ -70,4 +70,12 @@ export default class Api {
     const res = await axios.get(`${this.apibase}/visits/${id}`, { headers });
     return this.msg(res);
   }
+
+  async getAllDoctors(token) {
+    const headers = {
+      "x-access-token": token,
+    };
+    const res = await axios.get(`${this.apibase}/doctors`, { headers });
+    return this.msg(res);
+  }
 }

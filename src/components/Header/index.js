@@ -11,7 +11,7 @@ const Header = ({ text, actionType }) => {
   };
 
   return (
-    <header>
+    <header className="bottom-shadow">
       <div id="logo">
         <img src="./../logo-pic.svg" alt="logo" className="resp-img" />
       </div>

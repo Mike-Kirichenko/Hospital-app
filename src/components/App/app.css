@@ -9,7 +9,13 @@ body * {
 }
 
 :root {
-  --main-color: #c5e9ff;
+  --main-color-1: #c5e9ff;
+  --main-color-2: #cee8f8;
+  --shadow-color: gray;
+}
+
+.bottom-shadow {
+  box-shadow: 0px 3px 10px var(--shadow-color);
 }
 
 .resp-img {
@@ -18,7 +24,7 @@ body * {
 }
 main {
   min-height: 90vh;
-  background-color: #ccebff;
+  background-color: var(--main-color-2);
 }
 
 .main-headings {

@@ -1,5 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import ApiContext from "../../contexts/ApiContext";
+import VisitInputs from "../VisitInputs";
 import TokenContext from "../../contexts/TokenContext";
 
 const Visits = () => {
@@ -18,7 +19,12 @@ const Visits = () => {
   }, []);
 
   if (!visits.length) return "no data...";
-  return <div>{visits[0]["patient_name"]}</div>;
+  return (
+    <main>
+      <VisitInputs />
+      {visits[0]["patient_name"]}
+    </main>
+  );
 };
 
 export default Visits;
