@@ -3,8 +3,8 @@ import axios from "axios";
 export default class Api {
   errMsg = "Coudn't fetch";
 
-  constructor() {
-    this.apibase = "http://localhost:3000/api/hospital";
+  constructor(url) {
+    this.apibase = url;
   }
 
   msg(res) {

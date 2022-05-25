@@ -5,7 +5,7 @@ import Api from "../../services/ApiService";
 import ApiContext from "../../contexts/ApiContext";
 import "./app.css";
 
-const api = new Api();
+const api = new Api("http://localhost:3000/api/hospital");
 
 const App = () => {
   return (
