@@ -1,34 +1,54 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { validEmail, validPassword } from "../../helpers/validator";
 import ApiContext from "../../contexts/ApiContext";
+
 import "./login-register-form.scss";
 
 const RegisterForm = () => {
   const api = useContext(ApiContext);
-  const [msg, setMsg] = useState(null);
+  const [msg, setMsg] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { target } = event;
     const [login, password, re_password] = target;
+
     if (!login.value || !password.value || !re_password.value) {
-      setMsg({ type: "error", msg: "All inputs required" });
-    } else if (password.value !== re_password.value) {
-      setMsg({ type: "error", msg: "Passwords must match" });
+      setMsg({ type: "error", msgText: "All inputs required" });
     } else {
-      const dataObject = { email: login.value, password: password.value };
-      try {
-        const registered = await api.register(dataObject);
-        if (registered) {
-          setMsg({ type: "success", msg: "Registration is successful" });
-          target.reset();
-        }
-      } catch (err) {
-        const { msg } = err.response.data;
-        setMsg({ type: "error", msg });
+      const errors = [];
+      if (!validEmail(login.value)) {
+        errors.push("Invalid email");
       }
+      if (!validPassword(password.value)) {
+        errors.push("Invalid password");
+      }
+
+      if (!errors.length) {
+        if (password.value !== re_password.value) {
+          setMsg({ type: "error", msgText: "Passwords must match" });
+        } else {
+          const dataObject = { email: login.value, password: password.value };
+          try {
+            const registered = await api.register(dataObject);
+            if (registered) {
+              setMsg({
+                type: "success",
+                msgText: "Registration is successful",
+              });
+              target.reset();
+            }
+          } catch (err) {
+            const { msg } = err.response.data;
+            setMsg({ type: "error", msgText: msg });
+          }
+        }
+      } else setMsg({ type: "error", msgText: errors });
     }
   };
+
+  const { type, msgText } = msg;
 
   return (
     <main>
@@ -38,11 +58,18 @@ const RegisterForm = () => {
         </div>
         <div id="form">
           <h5 className="main-headings">Register in the system</h5>
-          {msg && (
-            <div className={msg.type === "success" ? "succ-msg" : "err-msg"}>
-              {msg.msg}
-            </div>
-          )}
+          {msgText &&
+            (Array.isArray(msgText) ? (
+              msgText.map((error, index) => (
+                <div className="err-msg" key={`error-${index}`}>
+                  {error}
+                </div>
+              ))
+            ) : (
+              <div className={type === "success" ? "succ-msg" : "err-msg"}>
+                {msgText}
+              </div>
+            ))}
           <form onSubmit={handleSubmit}>
             <div className="form-inp-block">
               <label htmlFor="login">Login</label>
