@@ -1,0 +1,45 @@
+#login-register {
+  padding: 3% 2%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  #img-part {
+    width: 30%;
+  }
+
+  #form {
+    width: 40%;
+    height: 90%;
+    background-color: white;
+    padding: 2%;
+    position: relative;
+
+    label {
+      display: block;
+      margin-bottom: 1%;
+    }
+
+    input {
+      width: 100%;
+      padding: 2.5%;
+      border: 1px solid gray;
+    }
+
+    .form-inp-block {
+      margin-top: 5%;
+    }
+
+    .form-buttons {
+      text-align: right;
+    }
+
+    #form-button {
+      background-color: transparent;
+      width: 30%;
+      padding: 2% 0;
+      border: 1px solid black;
+      cursor: pointer;
+    }
+  }
+}
