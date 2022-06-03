@@ -9,7 +9,9 @@ body * {
 }
 
 :root {
-  --main-color: #c5e9ff;
+  --main-color-1: #c5e9ff;
+  --main-color-2: #cee8f8;
+  --main-color-3: #c4c4c4;
 }
 
 .resp-img {
