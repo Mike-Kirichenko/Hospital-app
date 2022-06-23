@@ -20,7 +20,7 @@ const App = () => {
             exact
             element={
               <WithAuth>
-                <Header text="Visits" actionType="viewVisits" />
+                <Header text="Visits" action />
                 <Visits />
               </WithAuth>
             }

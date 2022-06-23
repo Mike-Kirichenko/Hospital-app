@@ -4,6 +4,7 @@
   margin-top: 4%;
   text-align: center;
   border: 1px solid black;
+
   tbody {
     background-color: white;
     border-bottom: 1px solid black;
@@ -15,7 +16,7 @@
   }
 
   thead {
-    background-color: var(--main-color-3);
+    background-color: lightgray;
   }
 }
 

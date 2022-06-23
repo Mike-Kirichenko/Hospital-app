@@ -1,12 +1,13 @@
 import { Alert } from "react-bootstrap";
-export const MsgWindow = ({ msg, setShowWindow }) => {
+export const MsgWindow = ({ msg, setMsg }) => {
   const { type, text } = msg;
+
   return (
     <Alert
       variant={(type === "err" && "danger") || (type === "succ" && "success")}
-      onClose={() => setShowWindow(false)}
+      onClose={() => setMsg("")}
       dismissible
-      className="position-absolute top-0 left-100 fade in"
+      className="position-absolute top-0 left-0"
     >
       {Array.isArray(text) ? (
         <ul className="p-2">

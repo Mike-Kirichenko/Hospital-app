@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./header.scss";
 
-const Header = ({ text, actionType }) => {
+const Header = ({ text, action }) => {
   const navigate = useNavigate();
 
   const exit = () => {
@@ -15,7 +15,7 @@ const Header = ({ text, actionType }) => {
         <img src="./../logo-pic.svg" alt="logo" className="resp-img" />
       </div>
       <h2 className="main-headings">{text}</h2>
-      {actionType === "viewVisits" && (
+      {action && (
         <button id="exit" onClick={exit}>
           Exit
         </button>

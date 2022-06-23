@@ -1,17 +1,16 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import DatePicker from "react-datepicker";
 import { validName, validText } from "../../helpers/validator";
 import { MsgWindow } from "../MsgWindow";
 import ApiContext from "../../contexts/ApiContext";
+import DoctorsContext from "../../contexts/DoctorsContext";
 import "./visitInputs.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 const VisitInputs = ({ setVisits }) => {
   const api = useContext(ApiContext);
-  const token = localStorage.getItem("token");
-  const [doctors, setDoctors] = useState([]);
-  const [showWindow, setShowWindow] = useState(false);
+  const doctors = useContext(DoctorsContext);
   const [msg, setMsg] = useState("");
   const [visitInpData, setvisitInpData] = useState({
     patient_name: "",
@@ -19,11 +18,6 @@ const VisitInputs = ({ setVisits }) => {
     date: "",
     text: "",
   });
-
-  useEffect(() => {
-    const doctors = api.getAllDoctors(token);
-    doctors.then((data) => setDoctors(data));
-  }, [api, token]);
 
   const setVisitPartials = (inputObj) => {
     setvisitInpData({ ...visitInpData, ...inputObj });
@@ -59,7 +53,6 @@ const VisitInputs = ({ setVisits }) => {
         setMsg({ type: "err", text: err });
       }
     }
-    setShowWindow(true);
   };
 
   const { patient_name, doctor_id, date, text } = visitInpData;
@@ -111,7 +104,6 @@ const VisitInputs = ({ setVisits }) => {
           placeholderText="dd.mm.yyyy"
           id="date"
           dateFormat="dd.MM.yyyy"
-          // showTimeSelect
           selected={visitInpData.date}
           onChange={(date) => setVisitPartials({ date })}
           className="visit-input"
@@ -135,7 +127,7 @@ const VisitInputs = ({ setVisits }) => {
           Add Visit
         </button>
       </div>
-      {showWindow && <MsgWindow msg={msg} setShowWindow={setShowWindow} />}
+      {msg && <MsgWindow msg={msg} setMsg={setMsg} />}
     </div>
   );
 };
