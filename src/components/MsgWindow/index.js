@@ -1,4 +1,5 @@
 import { Alert } from "react-bootstrap";
+
 export const MsgWindow = ({ msg, setMsg }) => {
   const { type, text } = msg;
 
