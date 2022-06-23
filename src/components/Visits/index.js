@@ -12,16 +12,17 @@ const Visits = () => {
   useEffect(() => {
     const allVisits = api.allVisits();
     allVisits
-      .then((data) => setVisits(data))
+      .then((data) => {
+        setVisits(data);
+      })
       .catch(() => {
         localStorage.removeItem("token");
       });
   }, [api]);
 
-  if (!visits.length) return "no data...";
   return (
     <main>
-      <VisitInputs />
+      <VisitInputs setVisits={setVisits} />
       {visits.length ? (
         <Table responsive id="visits-table">
           <thead>

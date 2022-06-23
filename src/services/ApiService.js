@@ -5,11 +5,6 @@ export default class Api {
 
   constructor(url) {
     this.apibase = url;
-    this.headers = {
-      headers: {
-        "x-access-token": localStorage.getItem("token"),
-      },
-    };
   }
 
   msg(res) {
@@ -18,7 +13,20 @@ export default class Api {
   }
 
   async allVisits() {
-    const res = await axios.get(`${this.apibase}/visits`, this.headers);
+    const res = await axios.get(`${this.apibase}/visits`, {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    });
+    return this.msg(res);
+  }
+
+  async createVisit(visitData) {
+    const res = await axios.post(`${this.apibase}/visits`, visitData, {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    });
     return this.msg(res);
   }
 
@@ -27,15 +35,19 @@ export default class Api {
     return this.msg(res);
   }
 
-  async login(object) {
-    const res = await axios.post(`${this.apibase}/user/login`, object);
+  async login(userData) {
+    const res = await axios.post(`${this.apibase}/user/login`, userData);
     const { token } = res.data;
     localStorage.setItem("token", token);
     return this.msg(res);
   }
 
   async getAllDoctors() {
-    const res = await axios.get(`${this.apibase}/doctors`, this.headers);
+    const res = await axios.get(`${this.apibase}/doctors`, {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    });
     return this.msg(res);
   }
 }

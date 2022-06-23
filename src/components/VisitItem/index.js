@@ -4,7 +4,7 @@ const VisitItem = ({ patient_name, doctor, date, text }) => {
   const finalDate = new Date(date);
   const [day, month, year] = [
     finalDate.getDate() < 10 ? `0${finalDate.getDate()}` : finalDate.getDate(),
-    finalDate.getMonth() < 10
+    finalDate.getMonth() + 1 < 10
       ? `0${finalDate.getMonth() + 1}`
       : finalDate.getMonth() + 1,
     finalDate.getFullYear(),
@@ -18,7 +18,7 @@ const VisitItem = ({ patient_name, doctor, date, text }) => {
       <td>
         {name} ({specialty})
       </td>
-      <td>{`${day}/${month}/${year}`}</td>
+      <td>{`${day}.${month}.${year}`}</td>
       <td>{text}</td>
       <td colSpan="2">
         <i className="fa fa-trash-o edit-items" />

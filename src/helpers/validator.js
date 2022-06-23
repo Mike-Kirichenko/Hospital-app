@@ -19,4 +19,9 @@ const validName = (str) => {
   return exp.test(str);
 };
 
-module.exports = { validEmail, validPassword, validName };
+const validText = (str) => {
+  const exp = new RegExp(/^[a-zA-Z\s.]{10,}$/);
+  return exp.test(str);
+};
+
+module.exports = { validEmail, validPassword, validName, validText };
