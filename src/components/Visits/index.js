@@ -1,13 +1,14 @@
-import { useState, useContext, useEffect } from "react";
-import ApiContext from "../../contexts/ApiContext";
+import { useState, useEffect } from "react";
+import api from "../../services/ApiService";
 import DoctorsContext from "../../contexts/DoctorsContext";
 import VisitInputs from "../VisitInputs";
 import VisitItem from "../VisitItem";
 import { Table } from "reactstrap";
 import "./visits.scss";
 
+const tableHeadings = ["Name", "Doctor", "Date", "Complaints"];
+
 const Visits = () => {
-  const api = useContext(ApiContext);
   const [visits, setVisits] = useState([]);
   const [doctors, setdoctors] = useState([]);
 
@@ -29,7 +30,7 @@ const Visits = () => {
       .catch(() => {
         localStorage.removeItem("token");
       });
-  }, [api]);
+  }, []);
 
   return (
     <main>
@@ -39,7 +40,7 @@ const Visits = () => {
           <Table responsive id="visits-table">
             <thead>
               <tr>
-                {["Name", "Doctor", "Date", "Complaints"].map((thText) => (
+                {tableHeadings.map((thText) => (
                   <th key={`th-${thText}`}>{thText}</th>
                 ))}
                 <th colSpan="2"></th>

@@ -2,14 +2,13 @@ import { useState, useContext } from "react";
 import DatePicker from "react-datepicker";
 import { validName, validText } from "../../helpers/validator";
 import { MsgWindow } from "../MsgWindow";
-import ApiContext from "../../contexts/ApiContext";
+import api from "../../services/ApiService";
 import DoctorsContext from "../../contexts/DoctorsContext";
 import "./visitInputs.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 const VisitInputs = ({ setVisits }) => {
-  const api = useContext(ApiContext);
   const doctors = useContext(DoctorsContext);
   const [msg, setMsg] = useState("");
   const [visitInpData, setvisitInpData] = useState({

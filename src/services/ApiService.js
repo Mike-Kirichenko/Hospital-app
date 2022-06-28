@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default class Api {
+class Api {
   errMsg = "Coudn't fetch";
 
   constructor(url) {
@@ -51,3 +51,6 @@ export default class Api {
     return this.msg(res);
   }
 }
+
+const api = new Api("http://localhost:3000/api/hospital");
+export default api;
