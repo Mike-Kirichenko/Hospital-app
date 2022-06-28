@@ -50,6 +50,15 @@ class Api {
     });
     return this.msg(res);
   }
+
+  async deleteVisit(id) {
+    const res = await axios.delete(`${this.apibase}/visits/${id}`, {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    });
+    return this.msg(res);
+  }
 }
 
 const api = new Api("http://localhost:3000/api/hospital");
