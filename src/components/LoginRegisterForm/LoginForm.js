@@ -1,11 +1,10 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import ApiContext from "../../contexts/ApiContext";
+import api from "../../services/ApiService";
 import "./login-register-form.scss";
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const api = useContext(ApiContext);
   const [errMsg, setErrMsg] = useState(null);
 
   const [fullLoginData, setLoginData] = useState({ email: "", password: "" });

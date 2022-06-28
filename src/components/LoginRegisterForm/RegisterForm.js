@@ -1,12 +1,11 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { validEmail, validPassword } from "../../helpers/validator";
-import ApiContext from "../../contexts/ApiContext";
+import api from "../../services/ApiService";
 
 import "./login-register-form.scss";
 
 const RegisterForm = () => {
-  const api = useContext(ApiContext);
   const [msg, setMsg] = useState("");
   const [registerData, setData] = useState({
     login: "",

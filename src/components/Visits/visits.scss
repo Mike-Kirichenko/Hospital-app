@@ -1,0 +1,27 @@
+#visits-table {
+  width: 96%;
+  margin: auto;
+  margin-top: 4%;
+  text-align: center;
+  border: 1px solid black;
+
+  tbody {
+    background-color: white;
+    border-bottom: 1px solid black;
+  }
+
+  td {
+    border-bottom: none;
+    border-left: 1px solid black;
+  }
+
+  thead {
+    background-color: lightgray;
+  }
+}
+
+#no-visits-msg {
+  margin-top: 5%;
+  text-align: center;
+  font-weight: 900;
+}
