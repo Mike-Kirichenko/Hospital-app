@@ -10,7 +10,7 @@ import "./visits.scss";
 const tableHeadings = ["Name", "Doctor", "Date", "Complaints"];
 
 const Visits = () => {
-  const [itemToDelete, setItemToDelete] = useState({ id: null });
+  const [itemId, setItemToDeleteId] = useState(null);
 
   const [visits, setVisits] = useState([]);
   const [doctors, setdoctors] = useState([]);
@@ -37,23 +37,20 @@ const Visits = () => {
 
   const handleDeleteConfirm = (item) => {
     const { id } = item;
-    setItemToDelete({ id });
+    setItemToDeleteId(id);
   };
 
   const deleteVisit = () => {
-    const { id } = itemToDelete;
-    const visits = api.deleteVisit(id);
+    const visits = api.deleteVisit(itemId);
     visits.then((data) => {
       setVisits(data);
-      setItemToDelete({ id: null });
+      setItemToDeleteId(null);
     });
   };
 
-  const { id } = itemToDelete;
-
   return (
     <main>
-      {id && (
+      {itemId && (
         <ModalConfirm
           handleDeleteConfirm={handleDeleteConfirm}
           deleteVisit={deleteVisit}
