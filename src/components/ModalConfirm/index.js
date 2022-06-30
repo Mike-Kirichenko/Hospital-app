@@ -6,10 +6,7 @@ const ModalConfirm = ({ handleDeleteConfirm, deleteVisit }) => {
       <Modal show={true} backdrop="static" keyboard={false}>
         <Modal.Body>Delete this visit ?</Modal.Body>
         <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => handleDeleteConfirm({ id: null })}
-          >
+          <Button variant="secondary" onClick={() => handleDeleteConfirm(null)}>
             No
           </Button>
           <Button variant="primary" onClick={deleteVisit}>
