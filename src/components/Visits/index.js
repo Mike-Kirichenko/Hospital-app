@@ -1,3 +1,4 @@
+import ModalConfirm from "../ModalConfirm";
 import { useState, useEffect } from "react";
 import api from "../../services/ApiService";
 import DoctorsContext from "../../contexts/DoctorsContext";
@@ -9,6 +10,8 @@ import "./visits.scss";
 const tableHeadings = ["Name", "Doctor", "Date", "Complaints"];
 
 const Visits = () => {
+  const [itemId, setItemToDeleteId] = useState(null);
+
   const [visits, setVisits] = useState([]);
   const [doctors, setdoctors] = useState([]);
 
@@ -32,8 +35,27 @@ const Visits = () => {
       });
   }, []);
 
+  const handleDeleteConfirm = (item) => {
+    const { id } = item;
+    setItemToDeleteId(id);
+  };
+
+  const deleteVisit = () => {
+    const visits = api.deleteVisit(itemId);
+    visits.then((data) => {
+      setVisits(data);
+      setItemToDeleteId(null);
+    });
+  };
+
   return (
     <main>
+      {itemId && (
+        <ModalConfirm
+          handleDeleteConfirm={handleDeleteConfirm}
+          deleteVisit={deleteVisit}
+        />
+      )}
       <DoctorsContext.Provider value={doctors}>
         <VisitInputs setVisits={setVisits} />
         {visits.length ? (
@@ -48,7 +70,11 @@ const Visits = () => {
             </thead>
             <tbody>
               {visits.map((visit) => (
-                <VisitItem {...visit} key={`visit-${visit.id}`} />
+                <VisitItem
+                  {...visit}
+                  key={`visit-${visit.id}`}
+                  handleDeleteConfirm={handleDeleteConfirm}
+                />
               ))}
             </tbody>
           </Table>
