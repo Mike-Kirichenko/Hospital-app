@@ -22,7 +22,6 @@ body * {
 main {
   min-height: 100vh;
   background-color: var(--main-body-color);
-  padding: 25px;
 }
 
 .main-headings {
