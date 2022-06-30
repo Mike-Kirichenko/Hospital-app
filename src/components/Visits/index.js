@@ -35,11 +35,6 @@ const Visits = () => {
       });
   }, []);
 
-  const handleDeleteConfirm = (item) => {
-    const { id } = item;
-    setItemToDeleteId(id);
-  };
-
   const deleteVisit = () => {
     const visits = api.deleteVisit(itemId);
     visits.then((data) => {
@@ -52,7 +47,7 @@ const Visits = () => {
     <main>
       {itemId && (
         <ModalConfirm
-          handleDeleteConfirm={handleDeleteConfirm}
+          setItemToDeleteId={setItemToDeleteId}
           deleteVisit={deleteVisit}
         />
       )}
@@ -73,7 +68,7 @@ const Visits = () => {
                 <VisitItem
                   {...visit}
                   key={`visit-${visit.id}`}
-                  handleDeleteConfirm={handleDeleteConfirm}
+                  setItemToDeleteId={setItemToDeleteId}
                 />
               ))}
             </tbody>

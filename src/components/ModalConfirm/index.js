@@ -1,12 +1,12 @@
 import { Modal, Button } from "react-bootstrap";
 
-const ModalConfirm = ({ handleDeleteConfirm, deleteVisit }) => {
+const ModalConfirm = ({ setItemToDeleteId, deleteVisit }) => {
   return (
     <>
       <Modal show={true} backdrop="static" keyboard={false}>
         <Modal.Body>Delete this visit ?</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleDeleteConfirm(null)}>
+          <Button variant="secondary" onClick={() => setItemToDeleteId(null)}>
             No
           </Button>
           <Button variant="primary" onClick={deleteVisit}>
