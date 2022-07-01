@@ -6,7 +6,7 @@ const VisitItem = ({
   doctor,
   date,
   text,
-  handleDeleteConfirm,
+  setItemToDeleteId,
 }) => {
   const finalDate = new Date(date);
   const [day, month, year] = [
@@ -31,7 +31,7 @@ const VisitItem = ({
         <td colSpan="2">
           <i
             className="fa fa-trash-o edit-items"
-            onClick={() => handleDeleteConfirm({ id, toDelete: true })}
+            onClick={() => setItemToDeleteId(id)}
           />
           <i className="fa fa-pencil edit-items" />
         </td>
