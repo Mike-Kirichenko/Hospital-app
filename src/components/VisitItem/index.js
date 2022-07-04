@@ -1,13 +1,7 @@
 import "./visitItem.css";
 
-const VisitItem = ({
-  id,
-  patient_name,
-  doctor,
-  date,
-  text,
-  setItemToDeleteId,
-}) => {
+const VisitItem = ({ visitData, setItemToDeleteId, setItemToEdit }) => {
+  const { id, patient_name, doctor, date, text } = visitData;
   const finalDate = new Date(date);
   const [day, month, year] = [
     finalDate.getDate() < 10 ? `0${finalDate.getDate()}` : finalDate.getDate(),
@@ -33,7 +27,10 @@ const VisitItem = ({
             className="fa fa-trash-o edit-items"
             onClick={() => setItemToDeleteId(id)}
           />
-          <i className="fa fa-pencil edit-items" />
+          <i
+            className="fa fa-pencil edit-items"
+            onClick={() => setItemToEdit(visitData)}
+          />
         </td>
       </tr>
     </>

@@ -59,6 +59,15 @@ class Api {
     });
     return this.msg(res);
   }
+
+  async updateVisit(id, body) {
+    const res = await axios.patch(`${this.apibase}/visits/${id}`, body, {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    });
+    return this.msg(res);
+  }
 }
 
 const api = new Api("http://localhost:3000/api/hospital");
