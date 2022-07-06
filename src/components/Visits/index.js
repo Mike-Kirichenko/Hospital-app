@@ -57,11 +57,15 @@ const Visits = () => {
         doctor_id,
         date,
       });
-      visits.then((data) => {
-        setVisits(data);
-        setItemToEdit({});
-        setErrors(null);
-      });
+      visits
+        .then((data) => {
+          setVisits(data);
+          setItemToEdit({});
+          setErrors(null);
+        })
+        .catch((err) => {
+          setErrors(err);
+        });
     } else setErrors(visit.err);
   };
 
@@ -77,7 +81,7 @@ const Visits = () => {
         {Object.keys(editItem).length > 0 && (
           <ModalEdit
             setItemToEdit={setItemToEdit}
-            updateVisit={updateVisit}
+            handleUpdateVisit={updateVisit}
             editItem={editItem}
             errors={errors}
             setErrors={setErrors}

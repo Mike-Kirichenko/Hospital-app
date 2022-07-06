@@ -1,4 +1,5 @@
 import { validName, validText } from "./validator";
+
 const validateVisit = (visitObj) => {
   let answer;
   const { patient_name, doctor_id, text, date } = visitObj;
