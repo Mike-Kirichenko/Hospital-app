@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { validEmail, validPassword } from "../../helpers/validator";
+import MsgType from "../MsgType";
+
 import api from "../../services/ApiService";
 
 import "./login-register-form.scss";
@@ -67,20 +69,7 @@ const RegisterForm = () => {
         </div>
         <div id="form">
           <h5 className="main-headings">Register in the system</h5>
-          {msgText &&
-            (Array.isArray(msgText) ? (
-              <ul>
-                {msgText.map((error, index) => (
-                  <li className="err-msg" key={`error-${index}`}>
-                    {error}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <div className={type === "success" ? "succ-msg" : "err-msg"}>
-                {msgText}
-              </div>
-            ))}
+          {msgText && <MsgType msgData={{ type, textData: msgText }} />}
           <div className="form-inp-block">
             <label htmlFor="login">Login</label>
             <input

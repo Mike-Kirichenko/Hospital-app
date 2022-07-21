@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import DatePicker from "react-datepicker";
-import ErrorsList from "../ErrorsList";
+import MsgType from "../MsgType";
 import { Modal, Button } from "react-bootstrap";
 import DoctorsContext from "../../contexts/DoctorsContext";
 
@@ -103,7 +103,9 @@ const ModalEdit = ({
             }
           />
         </div>
-        {errors.length ? <ErrorsList errors={errors} /> : ""}
+        {errors.length > 0 && (
+          <MsgType msgData={{ type: "error", textData: errors }} />
+        )}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={cancelEdit}>
