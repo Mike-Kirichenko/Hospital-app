@@ -6,7 +6,9 @@ const ErrorsList = ({ errors }) => {
       ))}
     </ul>
   ) : (
-    { errors }
+    <div className="err-msg">
+      <p>{errors}</p>
+    </div>
   );
 };
 export default ErrorsList;

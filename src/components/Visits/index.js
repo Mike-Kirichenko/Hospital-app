@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Table } from "reactstrap";
-import ModalConfirm from "../ModalConfirm";
+import ModalDelete from "../ModalDelete";
 import ModalEdit from "../ModalEdit";
 import api from "../../services/ApiService";
 import DoctorsContext from "../../contexts/DoctorsContext";
@@ -48,15 +48,9 @@ const Visits = () => {
 
   const updateVisit = async () => {
     const { id } = editItem;
-    const { text, patient_name, doctor_id, date } = editItem;
     const visit = validateVisit(editItem);
     if (visit.isValid) {
-      const visits = api.updateVisit(id, {
-        text,
-        patient_name,
-        doctor_id,
-        date,
-      });
+      const visits = api.updateVisit(id, editItem);
       visits
         .then((data) => {
           setVisits(data);
@@ -73,7 +67,7 @@ const Visits = () => {
     <main>
       <DoctorsContext.Provider value={doctors}>
         {itemId && (
-          <ModalConfirm
+          <ModalDelete
             setItemToDeleteId={setItemToDeleteId}
             deleteVisit={deleteVisit}
           />

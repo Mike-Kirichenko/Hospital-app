@@ -1,6 +1,6 @@
 import { Modal, Button } from "react-bootstrap";
 
-const ModalConfirm = ({ setItemToDeleteId, deleteVisit }) => {
+const ModalDelete = ({ setItemToDeleteId, deleteVisit }) => {
   return (
     <>
       <Modal show={true} backdrop="static" keyboard={false}>
@@ -17,4 +17,4 @@ const ModalConfirm = ({ setItemToDeleteId, deleteVisit }) => {
     </>
   );
 };
-export default ModalConfirm;
+export default ModalDelete;
