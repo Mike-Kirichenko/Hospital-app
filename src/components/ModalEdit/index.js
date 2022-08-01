@@ -19,12 +19,6 @@ const ModalEdit = ({
   const doctors = useContext(DoctorsContext);
   const { patient_name, text, date, doctor } = editItem;
   const { name: selectedDoctorName, id: selectedDoctorId } = doctor;
-  const dateObj = moment(date);
-  const [day, month, year] = [
-    dateObj.date() < 10 ? `0${dateObj.date()}` : dateObj.date(),
-    dateObj.month() + 1 < 10 ? `0${dateObj.month() + 1}` : dateObj.month() + 1,
-    dateObj.year(),
-  ];
 
   const cancelEdit = () => {
     setItemToEdit({});
@@ -84,7 +78,7 @@ const ModalEdit = ({
             placeholderText="dd.mm.yyyy"
             id="date"
             dateFormat="dd.MM.yyyy"
-            value={`${day}.${month}.${year}`}
+            value={moment(date).format("DD.MM.YYYY")}
             onChange={(date) => setEditedVisitPartials({ date })}
           />
         </div>
