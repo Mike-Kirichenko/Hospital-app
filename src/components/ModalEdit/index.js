@@ -1,3 +1,4 @@
+import moment from "moment";
 import { useContext } from "react";
 import DatePicker from "react-datepicker";
 import MsgType from "../MsgType";
@@ -18,13 +19,11 @@ const ModalEdit = ({
   const doctors = useContext(DoctorsContext);
   const { patient_name, text, date, doctor } = editItem;
   const { name: selectedDoctorName, id: selectedDoctorId } = doctor;
-  const dateObj = new Date(date);
+  const dateObj = moment(date);
   const [day, month, year] = [
-    dateObj.getDate() < 10 ? `0${dateObj.getDate()}` : dateObj.getDate(),
-    dateObj.getMonth() + 1 < 10
-      ? `0${dateObj.getMonth() + 1}`
-      : dateObj.getMonth() + 1,
-    dateObj.getFullYear(),
+    dateObj.date() < 10 ? `0${dateObj.date()}` : dateObj.date(),
+    dateObj.month() + 1 < 10 ? `0${dateObj.month() + 1}` : dateObj.month() + 1,
+    dateObj.year(),
   ];
 
   const cancelEdit = () => {
@@ -103,7 +102,7 @@ const ModalEdit = ({
             }
           />
         </div>
-        {errors.length > 0 && (
+        {errors && errors.length > 0 && (
           <MsgType msgData={{ type: "error", textData: errors }} />
         )}
       </Modal.Body>
