@@ -1,20 +1,23 @@
-import ModalConfirm from "../ModalConfirm";
 import { useState, useEffect } from "react";
+import { Table } from "reactstrap";
+import ModalDelete from "../ModalDelete";
+import ModalEdit from "../ModalEdit";
 import api from "../../services/ApiService";
 import DoctorsContext from "../../contexts/DoctorsContext";
 import VisitInputs from "../VisitInputs";
 import VisitItem from "../VisitItem";
-import { Table } from "reactstrap";
+import validateVisit from "../../helpers/validateVisit";
+
 import "./visits.scss";
 
 const tableHeadings = ["Name", "Doctor", "Date", "Complaints"];
 
 const Visits = () => {
   const [itemId, setItemToDeleteId] = useState(null);
-
+  const [editItem, setItemToEdit] = useState({});
   const [visits, setVisits] = useState([]);
   const [doctors, setdoctors] = useState([]);
-
+  const [errors, setErrors] = useState([]);
   useEffect(() => {
     const allVisits = api.allVisits();
     allVisits
@@ -43,15 +46,41 @@ const Visits = () => {
     });
   };
 
+  const updateVisit = async () => {
+    const { id } = editItem;
+    const visit = validateVisit(editItem);
+    if (visit.isValid) {
+      const visits = api.updateVisit(id, editItem);
+      visits
+        .then((data) => {
+          setVisits(data);
+          setItemToEdit({});
+          setErrors(null);
+        })
+        .catch((err) => {
+          setErrors(err);
+        });
+    } else setErrors(visit.err);
+  };
+
   return (
     <main>
-      {itemId && (
-        <ModalConfirm
-          setItemToDeleteId={setItemToDeleteId}
-          deleteVisit={deleteVisit}
-        />
-      )}
       <DoctorsContext.Provider value={doctors}>
+        {itemId && (
+          <ModalDelete
+            setItemToDeleteId={setItemToDeleteId}
+            deleteVisit={deleteVisit}
+          />
+        )}
+        {Object.keys(editItem).length > 0 && (
+          <ModalEdit
+            setItemToEdit={setItemToEdit}
+            handleUpdateVisit={updateVisit}
+            editItem={editItem}
+            errors={errors}
+            setErrors={setErrors}
+          />
+        )}
         <VisitInputs setVisits={setVisits} />
         {visits.length ? (
           <Table responsive id="visits-table">
@@ -66,9 +95,10 @@ const Visits = () => {
             <tbody>
               {visits.map((visit) => (
                 <VisitItem
-                  {...visit}
+                  visitData={{ ...visit }}
                   key={`visit-${visit.id}`}
                   setItemToDeleteId={setItemToDeleteId}
+                  setItemToEdit={setItemToEdit}
                 />
               ))}
             </tbody>

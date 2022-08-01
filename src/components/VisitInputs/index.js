@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import DatePicker from "react-datepicker";
-import { validName, validText } from "../../helpers/validator";
+import validateVisit from "../../helpers/validateVisit";
 import { MsgWindow } from "../MsgWindow";
 import api from "../../services/ApiService";
 import DoctorsContext from "../../contexts/DoctorsContext";
@@ -23,33 +23,25 @@ const VisitInputs = ({ setVisits }) => {
   };
 
   const addNewVisit = async () => {
-    const err = [];
-    if (!patient_name || !doctor_id || !text || !date)
-      setMsg({ type: "err", text: "All visit info is required" });
+    const validVisitData = validateVisit(visitInpData);
+    if (!validVisitData.isValid)
+      setMsg({ type: "err", text: validVisitData.err });
     else {
-      if (!validName(patient_name)) err.push("Invalid name");
-      if (typeof doctor_id !== "number") err.push("No doctor information");
-      if (!validText(text)) err.push("Invalid complaints text");
-      if (!err.length) {
-        setMsg("");
-        try {
-          const withAdded = await api.createVisit(visitInpData);
-          if (withAdded) {
-            setMsg({ type: "succ", text: "New visit successfully added!" });
-            setVisits(withAdded);
-            setvisitInpData({
-              patient_name: "",
-              doctor_id: "",
-              date: "",
-              text: "",
-            });
-          }
-        } catch (err) {
-          const { msg } = err.response.data;
-          setMsg({ type: "err", text: msg });
+      try {
+        const withAdded = await api.createVisit(visitInpData);
+        if (withAdded) {
+          setMsg({ type: "succ", text: "New visit successfully added!" });
+          setVisits(withAdded);
+          setvisitInpData({
+            patient_name: "",
+            doctor_id: "",
+            date: "",
+            text: "",
+          });
         }
-      } else {
-        setMsg({ type: "err", text: err });
+      } catch (err) {
+        const { msg } = err.response.data;
+        setMsg({ type: "err", text: msg });
       }
     }
   };
