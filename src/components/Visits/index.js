@@ -75,15 +75,18 @@ const Visits = () => {
       visits.sort((a, b) => {
         let answer;
         if (sortKey !== "doctor") {
-          if (sortDir === "ASC") answer = a[sortKey] < b[sortKey] ? 1 : -1;
-          if (sortDir === "DESC") answer = a[sortKey] > b[sortKey] ? 1 : -1;
-        } else {
-          if (sortDir === "ASC")
+          if (sortDir === "ASC") {
+            answer = a[sortKey] < b[sortKey] ? 1 : -1;
+          } else if (sortDir === "DESC") {
+            answer = a[sortKey] > b[sortKey] ? 1 : -1;
+          }
+        } else if (sortKey === "doctor") {
+          if (sortDir === "ASC") {
             answer = a[sortKey].name < b[sortKey].name ? 1 : -1;
-          if (sortDir === "DESC")
+          } else if (sortDir === "DESC") {
             answer = a[sortKey].name > b[sortKey].name ? 1 : -1;
+          }
         }
-
         return answer;
       });
       setVisits(visits);
