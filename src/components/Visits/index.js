@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Table } from "reactstrap";
 import ModalDelete from "../ModalDelete";
 import ModalEdit from "../ModalEdit";
+import FilterSort from "../FilterSort";
 import api from "../../services/ApiService";
 import DoctorsContext from "../../contexts/DoctorsContext";
 import VisitInputs from "../VisitInputs";
@@ -16,6 +17,7 @@ const Visits = () => {
   const [itemId, setItemToDeleteId] = useState(null);
   const [editItem, setItemToEdit] = useState({});
   const [visits, setVisits] = useState([]);
+  const [sortBy, setSort] = useState({ sortKey: "", sortDir: "" });
   const [doctors, setdoctors] = useState([]);
   const [errors, setErrors] = useState([]);
   useEffect(() => {
@@ -63,6 +65,31 @@ const Visits = () => {
     } else setErrors(visit.err);
   };
 
+  const setSortData = (sortObj) => {
+    setSort({ ...sortBy, ...sortObj });
+  };
+
+  useEffect(() => {
+    const { sortKey, sortDir } = sortBy;
+    if (sortKey && sortDir) {
+      visits.sort((a, b) => {
+        let answer;
+        if (sortKey !== "doctor") {
+          if (sortDir === "ASC") answer = a[sortKey] < b[sortKey] ? 1 : -1;
+          if (sortDir === "DESC") answer = a[sortKey] > b[sortKey] ? 1 : -1;
+        } else {
+          if (sortDir === "ASC")
+            answer = a[sortKey].name < b[sortKey].name ? 1 : -1;
+          if (sortDir === "DESC")
+            answer = a[sortKey].name > b[sortKey].name ? 1 : -1;
+        }
+
+        return answer;
+      });
+      setVisits(visits);
+    }
+  }, [sortBy, visits]);
+
   return (
     <main>
       <DoctorsContext.Provider value={doctors}>
@@ -82,6 +109,7 @@ const Visits = () => {
           />
         )}
         <VisitInputs setVisits={setVisits} />
+        <FilterSort setSort={setSortData} sortBy={sortBy} />
         {visits.length ? (
           <Table responsive id="visits-table">
             <thead>
