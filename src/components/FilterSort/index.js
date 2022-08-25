@@ -3,6 +3,12 @@ import "./filterSort.css";
 const FilterSort = ({ setSort, sortBy }) => {
   const { sortKey, sortDir } = sortBy;
   const sortDirOptions = [null, "ASC", "DESC"];
+  const sortOptions = [
+    [null, null],
+    ["patient_name", "Patient Name"],
+    ["date", "Date"],
+    ["doctor", "Doctor"],
+  ];
 
   return (
     <div id="sortInputs">
@@ -14,10 +20,10 @@ const FilterSort = ({ setSort, sortBy }) => {
           onChange={({ target }) => setSort({ sortKey: target.value })}
           value={sortKey}
         >
-          <option>{null}</option>
-          <option value="patient_name">Patient Name</option>
-          <option value="date">Date</option>
-          <option value="doctor">Doctor</option>
+          {sortOptions.map((option) => {
+            const [value, text] = option;
+            return <option value={value}>{text}</option>;
+          })}
         </select>
       </div>
       {sortKey && (

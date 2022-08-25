@@ -74,13 +74,13 @@ const Visits = () => {
     const { sortKey, sortDir } = sortBy;
 
     if (sortKey && sortDir) {
-      let sorted = visits.sort((a, b) => {
+      visits.sort((a, b) => {
         const aValue = sortKey === "doctor" ? a[sortKey].name : a[sortKey];
         const bValue = sortKey === "doctor" ? b[sortKey].name : b[sortKey];
         return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
       });
-      sorted = sortDir === "DESC" ? sorted.reverse() : sorted;
-      setVisits(sorted);
+      if (sortDir === "ASC") visits.reverse();
+      setVisits(visits);
     }
   }, [sortBy, visits]);
 
