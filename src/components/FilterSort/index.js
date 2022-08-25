@@ -30,7 +30,7 @@ const FilterSort = ({ setSort, sortBy }) => {
             onChange={({ target }) => setSort({ sortDir: target.value })}
           >
             {sortDirOptions.map((option) => (
-              <option onClick={() => alert("OK")}>{option}</option>
+              <option>{option}</option>
             ))}
           </select>
         </div>
