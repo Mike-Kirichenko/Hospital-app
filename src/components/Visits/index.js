@@ -79,7 +79,7 @@ const Visits = () => {
         const bValue = sortKey === "doctor" ? b[sortKey].name : b[sortKey];
         return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
       });
-      sorted = sortDir === "DESC" ? visits.reverse() : visits;
+      sorted = sortDir === "DESC" ? sorted.reverse() : sorted;
       setVisits(sorted);
     }
   }, [sortBy, visits]);
