@@ -20,6 +20,7 @@ const Visits = () => {
   const [sortBy, setSort] = useState({ sortKey: "", sortDir: "" });
   const [doctors, setdoctors] = useState([]);
   const [errors, setErrors] = useState([]);
+
   useEffect(() => {
     const allVisits = api.allVisits();
     allVisits
@@ -71,17 +72,16 @@ const Visits = () => {
 
   useEffect(() => {
     const { sortKey, sortDir } = sortBy;
+
     if (sortKey && sortDir) {
       visits.sort((a, b) => {
         let answer;
+        const sortCriteria =
+          sortKey === "doctor" ? a[sortKey].name : a[sortKey];
         if (sortDir === "ASC") {
-          if (sortKey === "doctor") {
-            answer = a[sortKey].name < b[sortKey].name ? 1 : -1;
-          } else answer = a[sortKey] < b[sortKey] ? 1 : -1;
+          answer = sortCriteria < b[sortKey].name ? 1 : -1;
         } else if (sortDir === "DESC") {
-          if (sortKey === "doctor") {
-            answer = a[sortKey].name > b[sortKey].name ? 1 : -1;
-          } else answer = a[sortKey] > b[sortKey] ? 1 : -1;
+          answer = sortCriteria > b[sortKey] ? 1 : -1;
         }
         return answer;
       });
