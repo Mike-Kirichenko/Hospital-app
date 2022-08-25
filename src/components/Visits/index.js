@@ -76,12 +76,14 @@ const Visits = () => {
     if (sortKey && sortDir) {
       visits.sort((a, b) => {
         let answer;
-        const sortCriteria =
+        const firstSortCriteria =
           sortKey === "doctor" ? a[sortKey].name : a[sortKey];
+        const secondSortCriteria =
+          sortKey === "doctor" ? b[sortKey].name : b[sortKey];
         if (sortDir === "ASC") {
-          answer = sortCriteria < b[sortKey].name ? 1 : -1;
+          answer = firstSortCriteria < secondSortCriteria ? 1 : -1;
         } else if (sortDir === "DESC") {
-          answer = sortCriteria > b[sortKey] ? 1 : -1;
+          answer = firstSortCriteria > secondSortCriteria ? 1 : -1;
         }
         return answer;
       });
