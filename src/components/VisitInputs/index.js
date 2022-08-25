@@ -24,9 +24,9 @@ const VisitInputs = ({ setVisits }) => {
 
   const addNewVisit = async () => {
     const validVisitData = validateVisit(visitInpData);
-    if (!validVisitData.isValid)
+    if (!validVisitData.isValid) {
       setMsg({ type: "err", text: validVisitData.err });
-    else {
+    } else {
       try {
         const withAdded = await api.createVisit(visitInpData);
         if (withAdded) {

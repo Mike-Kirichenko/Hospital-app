@@ -2,6 +2,8 @@ import "./filterSort.css";
 
 const FilterSort = ({ setSort, sortBy }) => {
   const { sortKey, sortDir } = sortBy;
+  const sortDirOptions = [null, "ASC", "DESC"];
+
   return (
     <div id="sortInputs">
       <div className="sort-inp-wrapper">
@@ -27,9 +29,9 @@ const FilterSort = ({ setSort, sortBy }) => {
             value={sortDir}
             onChange={({ target }) => setSort({ sortDir: target.value })}
           >
-            <option>{null}</option>
-            <option value="ASC">ASC</option>
-            <option value="DESC">DESC</option>
+            {sortDirOptions.map((option) => (
+              <option onClick={() => alert("OK")}>{option}</option>
+            ))}
           </select>
         </div>
       )}
