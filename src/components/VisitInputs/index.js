@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import moment from "moment";
 import DatePicker from "react-datepicker";
 import validateVisit from "../../helpers/validateVisit";
 import { MsgWindow } from "../MsgWindow";
@@ -100,6 +101,7 @@ const VisitInputs = ({ setVisits }) => {
             onChange={(date) => setVisitPartials({ date })}
             className="info-input"
             value={date}
+            minDate={moment().toDate()}
           />
         </div>
         <div className="visitInputs-inp-wrapper ">

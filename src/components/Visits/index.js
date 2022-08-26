@@ -53,9 +53,6 @@ const Visits = () => {
   const deleteVisit = () => {
     const visits = api.deleteVisit(itemId);
     visits.then((data) => {
-      visitsInitial = data;
-      handleDateFilter();
-      sortVisits();
       setVisits(data);
       setItemToDeleteId(null);
     });
@@ -143,13 +140,17 @@ const Visits = () => {
           />
         )}
         <VisitInputs setVisits={setVisits} />
-        <SortInputs setSort={setSortData} sortBy={sortBy} />
-        <DateFilter
-          dateRange={dateRange}
-          setDateFilter={handleSetDateFilter}
-          startFilter={handleDateFilter}
-          setInitialData={handleSetInitialData}
-        />
+        {visits.length > 0 && (
+          <>
+            <SortInputs setSort={setSortData} sortBy={sortBy} />
+            <DateFilter
+              dateRange={dateRange}
+              setDateFilter={handleSetDateFilter}
+              startFilter={handleDateFilter}
+              setInitialData={handleSetInitialData}
+            />
+          </>
+        )}
         {visits.length ? (
           <Table responsive id="visits-table">
             <thead>
