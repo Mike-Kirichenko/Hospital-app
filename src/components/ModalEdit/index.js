@@ -80,6 +80,7 @@ const ModalEdit = ({
             dateFormat="dd.MM.yyyy"
             value={moment(date).format("DD.MM.YYYY")}
             onChange={(date) => setEditedVisitPartials({ date })}
+            minDate={moment().toDate()}
           />
         </div>
         <div>

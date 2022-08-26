@@ -21,7 +21,7 @@ const Visits = () => {
   const [visits, setVisits] = useState([]);
   const [sortBy, setSort] = useState({ sortKey: "", sortDir: "" });
   const [doctors, setdoctors] = useState([]);
-  const [errors, setErrors] = useState([]);
+  const [modalErrors, setErrors] = useState([]);
   const [dateRange, setDateFilter] = useState({
     filter: false,
     dateFrom: "",
@@ -50,11 +50,26 @@ const Visits = () => {
       });
   }, []);
 
+  /*
+    Here we select all new visits that match 
+    visits from last state, related to sorting/filtering. We update state with this new data,
+    Function is usually called after update or delete
+    */
+  const setFilterAndSortRelatedState = (data) => {
+    setVisits((oldVisits) => {
+      return data.filter((newVisits) => {
+        const found = oldVisits.findIndex((visit) => newVisits.id === visit.id);
+        return found > -1;
+      });
+    });
+  };
+
   const deleteVisit = () => {
     const visits = api.deleteVisit(itemId);
     visits.then((data) => {
-      setVisits(data);
       setItemToDeleteId(null);
+      setFilterAndSortRelatedState(data);
+      visitsInitial = data;
     });
   };
 
@@ -65,10 +80,10 @@ const Visits = () => {
       const visits = api.updateVisit(id, editItem);
       visits
         .then((data) => {
-          visitsInitial = data;
-          setVisits(data);
           setItemToEdit({});
           setErrors(null);
+          setFilterAndSortRelatedState(data);
+          visitsInitial = data;
         })
         .catch((err) => {
           setErrors(err);
@@ -135,22 +150,19 @@ const Visits = () => {
             setItemToEdit={setItemToEdit}
             handleUpdateVisit={updateVisit}
             editItem={editItem}
-            errors={errors}
+            errors={modalErrors}
             setErrors={setErrors}
           />
         )}
         <VisitInputs setVisits={setVisits} />
-        {visits.length > 0 && (
-          <>
-            <SortInputs setSort={setSortData} sortBy={sortBy} />
-            <DateFilter
-              dateRange={dateRange}
-              setDateFilter={handleSetDateFilter}
-              startFilter={handleDateFilter}
-              setInitialData={handleSetInitialData}
-            />
-          </>
-        )}
+        <SortInputs setSort={setSortData} sortBy={sortBy} />
+        <DateFilter
+          dateRange={dateRange}
+          setDateFilter={handleSetDateFilter}
+          startFilter={handleDateFilter}
+          setInitialData={handleSetInitialData}
+        />
+
         {visits.length ? (
           <Table responsive id="visits-table">
             <thead>

@@ -37,6 +37,7 @@ const DateFilter = ({
               selected={dateTo}
               onChange={(dateTo) => setDateFilter({ dateTo })}
               value={dateTo}
+              minDate={dateFrom}
             />
           </div>
           <div className="date-inp-wrapper">
