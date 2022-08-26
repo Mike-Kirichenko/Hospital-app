@@ -1,6 +1,4 @@
 import DatePicker from "react-datepicker";
-import PlusIcon from "../SVG/Plus";
-import DeleteIcon from "../SVG/Delete";
 import "./dateFilter.css";
 
 const DateFilter = ({
@@ -41,7 +39,7 @@ const DateFilter = ({
               value={dateTo}
             />
           </div>
-          <div className="date-inp-wrapper" style={{ width: "15%" }}>
+          <div className="date-inp-wrapper">
             <button id="filter-button" onClick={() => startFilter()}>
               Filter by date
             </button>
@@ -51,17 +49,13 @@ const DateFilter = ({
       {!filter ? (
         <div id="dateFilterLabel">
           <b>Add filter by date</b>&nbsp;&nbsp;
-          <PlusIcon
-            options={{ width: "12%", height: "12%" }}
-            setDateFilter={setDateFilter}
-          />
+          <span onClick={() => setDateFilter({ filter: true })}>
+            <i className="fa fa-plus edit-items " aria-hidden="true" />
+          </span>
         </div>
       ) : (
-        <div id="dateFilterLabel">
-          <DeleteIcon
-            options={{ width: "12%", height: "12%" }}
-            setInitialData={setInitialData}
-          />
+        <div id="dateFilterLabel" onClick={() => setInitialData()}>
+          <i className="fa fa-trash-o edit-items" />
         </div>
       )}
     </div>

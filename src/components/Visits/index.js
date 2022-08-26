@@ -1,9 +1,9 @@
-import moment from "moment";
 import { useState, useEffect } from "react";
+import moment from "moment";
 import { Table } from "reactstrap";
 import ModalDelete from "../ModalDelete";
 import ModalEdit from "../ModalEdit";
-import FilterSort from "../FilterSort";
+import SortInputs from "../SortInputs";
 import DateFilter from "../DateFilter";
 import api from "../../services/ApiService";
 import DoctorsContext from "../../contexts/DoctorsContext";
@@ -65,6 +65,7 @@ const Visits = () => {
       const visits = api.updateVisit(id, editItem);
       visits
         .then((data) => {
+          visitsInitial = data;
           setVisits(data);
           setItemToEdit({});
           setErrors(null);
@@ -98,18 +99,22 @@ const Visits = () => {
 
   const handleDateFilter = () => {
     const { dateFrom, dateTo } = dateRange;
-    const formattedDateFrom = moment(dateFrom).format("YYYY-MM-DD");
-    const formattedDateTo = moment(dateTo).format("YYYY-MM-DD");
-    const filtered = visitsInitial.filter(
-      (visit) =>
-        visit.date >= formattedDateFrom && visit.date <= formattedDateTo
-    );
-    setVisits(filtered);
+    if (dateFrom && dateTo) {
+      const formattedDateFrom = moment(dateFrom).format("YYYY-MM-DD");
+      const formattedDateTo = moment(dateTo).format("YYYY-MM-DD");
+      if (formattedDateTo >= formattedDateFrom) {
+        const filtered = visitsInitial.filter(
+          (visit) =>
+            visit.date >= formattedDateFrom && visit.date <= formattedDateTo
+        );
+        setVisits(filtered);
+      }
+    }
   };
 
   const handleSetInitialData = () => {
     setVisits(visitsInitial);
-    setDateFilter({ filter: false });
+    setDateFilter({ filter: false, dateFrom: "", dateTo: "" });
   };
 
   useEffect(() => {
@@ -135,13 +140,17 @@ const Visits = () => {
           />
         )}
         <VisitInputs setVisits={setVisits} />
-        <FilterSort setSort={setSortData} sortBy={sortBy} />
-        <DateFilter
-          dateRange={dateRange}
-          setDateFilter={handleSetDateFilter}
-          startFilter={handleDateFilter}
-          setInitialData={handleSetInitialData}
-        />
+        {visits.length > 0 && (
+          <>
+            <SortInputs setSort={setSortData} sortBy={sortBy} />
+            <DateFilter
+              dateRange={dateRange}
+              setDateFilter={handleSetDateFilter}
+              startFilter={handleDateFilter}
+              setInitialData={handleSetInitialData}
+            />
+          </>
+        )}
         {visits.length ? (
           <Table responsive id="visits-table">
             <thead>
