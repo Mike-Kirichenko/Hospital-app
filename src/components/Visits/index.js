@@ -72,9 +72,8 @@ const Visits = () => {
     setSort({ ...sortBy, ...sortObj });
   };
 
-  useEffect(() => {
+  const sortVisits = () => {
     const { sortKey, sortDir } = sortBy;
-
     if (sortKey && sortDir) {
       const sorted = [...visits].sort((a, b) => {
         const aValue = sortKey === "doctor" ? a[sortKey].name : a[sortKey];
@@ -84,6 +83,10 @@ const Visits = () => {
       if (sortDir === "DESC") sorted.reverse();
       setVisits(sorted);
     }
+  };
+
+  useEffect(() => {
+    sortVisits();
   }, [sortBy]);
 
   return (
