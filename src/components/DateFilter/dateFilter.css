@@ -6,7 +6,7 @@
 
 .date-inp-wrapper {
   height: 100%;
-  width: 20%;
+  width: 15%;
   margin: 0 1%;
   box-shadow: 0 10 var(--inputs-color);
 }
@@ -24,4 +24,8 @@
   padding: 3% 10%;
   width: 100%;
   border: 1px solid var(--inputs-color);
+}
+
+#dateFilterLabel .edit-items {
+  font-size: 30px;
 }

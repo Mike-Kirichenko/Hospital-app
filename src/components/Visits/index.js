@@ -1,5 +1,5 @@
-import moment from "moment";
 import { useState, useEffect } from "react";
+import moment from "moment";
 import { Table } from "reactstrap";
 import ModalDelete from "../ModalDelete";
 import ModalEdit from "../ModalEdit";
@@ -53,6 +53,9 @@ const Visits = () => {
   const deleteVisit = () => {
     const visits = api.deleteVisit(itemId);
     visits.then((data) => {
+      visitsInitial = data;
+      handleDateFilter();
+      sortVisits();
       setVisits(data);
       setItemToDeleteId(null);
     });
@@ -65,6 +68,7 @@ const Visits = () => {
       const visits = api.updateVisit(id, editItem);
       visits
         .then((data) => {
+          visitsInitial = data;
           setVisits(data);
           setItemToEdit({});
           setErrors(null);
@@ -98,18 +102,22 @@ const Visits = () => {
 
   const handleDateFilter = () => {
     const { dateFrom, dateTo } = dateRange;
-    const formattedDateFrom = moment(dateFrom).format("YYYY-MM-DD");
-    const formattedDateTo = moment(dateTo).format("YYYY-MM-DD");
-    const filtered = visitsInitial.filter(
-      (visit) =>
-        visit.date >= formattedDateFrom && visit.date <= formattedDateTo
-    );
-    setVisits(filtered);
+    if (dateFrom && dateTo) {
+      const formattedDateFrom = moment(dateFrom).format("YYYY-MM-DD");
+      const formattedDateTo = moment(dateTo).format("YYYY-MM-DD");
+      if (formattedDateTo >= formattedDateFrom) {
+        const filtered = visitsInitial.filter(
+          (visit) =>
+            visit.date >= formattedDateFrom && visit.date <= formattedDateTo
+        );
+        setVisits(filtered);
+      }
+    }
   };
 
   const handleSetInitialData = () => {
     setVisits(visitsInitial);
-    setDateFilter({ filter: false });
+    setDateFilter({ filter: false, dateFrom: "", dateTo: "" });
   };
 
   useEffect(() => {
