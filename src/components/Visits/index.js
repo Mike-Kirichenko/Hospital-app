@@ -1,3 +1,4 @@
+import moment from "moment";
 import { useState, useEffect } from "react";
 import { Table } from "reactstrap";
 import ModalDelete from "../ModalDelete";
@@ -9,9 +10,9 @@ import DoctorsContext from "../../contexts/DoctorsContext";
 import VisitInputs from "../VisitInputs";
 import VisitItem from "../VisitItem";
 import validateVisit from "../../helpers/validateVisit";
-
 import "./visits.scss";
 
+let visitsInitial;
 const tableHeadings = ["Name", "Doctor", "Date", "Complaints"];
 
 const Visits = () => {
@@ -21,12 +22,18 @@ const Visits = () => {
   const [sortBy, setSort] = useState({ sortKey: "", sortDir: "" });
   const [doctors, setdoctors] = useState([]);
   const [errors, setErrors] = useState([]);
+  const [dateRange, setDateFilter] = useState({
+    filter: false,
+    dateFrom: "",
+    dateTo: "",
+  });
 
   useEffect(() => {
     const allVisits = api.allVisits();
     allVisits
       .then((data) => {
         setVisits(data);
+        visitsInitial = data;
       })
       .catch(() => {
         localStorage.removeItem("token");
@@ -72,6 +79,10 @@ const Visits = () => {
     setSort({ ...sortBy, ...sortObj });
   };
 
+  const handleSetDateFilter = (dateRangeObj) => {
+    setDateFilter({ ...dateRange, ...dateRangeObj });
+  };
+
   const sortVisits = () => {
     const { sortKey, sortDir } = sortBy;
     if (sortKey && sortDir) {
@@ -83,6 +94,22 @@ const Visits = () => {
       if (sortDir === "DESC") sorted.reverse();
       setVisits(sorted);
     }
+  };
+
+  const handleDateFilter = () => {
+    const { dateFrom, dateTo } = dateRange;
+    const formattedDateFrom = moment(dateFrom).format("YYYY-MM-DD");
+    const formattedDateTo = moment(dateTo).format("YYYY-MM-DD");
+    const filtered = visitsInitial.filter(
+      (visit) =>
+        visit.date >= formattedDateFrom && visit.date <= formattedDateTo
+    );
+    setVisits(filtered);
+  };
+
+  const handleSetInitialData = () => {
+    setVisits(visitsInitial);
+    setDateFilter({ filter: false });
   };
 
   useEffect(() => {
@@ -109,7 +136,12 @@ const Visits = () => {
         )}
         <VisitInputs setVisits={setVisits} />
         <FilterSort setSort={setSortData} sortBy={sortBy} />
-        <DateFilter />
+        <DateFilter
+          dateRange={dateRange}
+          setDateFilter={handleSetDateFilter}
+          startFilter={handleDateFilter}
+          setInitialData={handleSetInitialData}
+        />
         {visits.length ? (
           <Table responsive id="visits-table">
             <thead>

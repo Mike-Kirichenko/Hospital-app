@@ -16,3 +16,12 @@
   width: 15%;
   height: 10%;
 }
+
+#filter-button {
+  margin-top: 10%;
+  border: none;
+  background-color: white;
+  padding: 3% 10%;
+  width: 100%;
+  border: 1px solid var(--inputs-color);
+}
