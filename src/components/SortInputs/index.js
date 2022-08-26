@@ -1,6 +1,6 @@
 import "./filterSort.css";
 
-const FilterSort = ({ setSort, sortBy }) => {
+const SortInputs = ({ setSort, sortBy }) => {
   const { sortKey, sortDir } = sortBy;
   const sortDirOptions = [null, "ASC", "DESC"];
   const sortOptions = [
@@ -49,4 +49,4 @@ const FilterSort = ({ setSort, sortBy }) => {
   );
 };
 
-export default FilterSort;
+export default SortInputs;

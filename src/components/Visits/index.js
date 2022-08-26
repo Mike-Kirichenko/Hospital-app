@@ -3,7 +3,7 @@ import moment from "moment";
 import { Table } from "reactstrap";
 import ModalDelete from "../ModalDelete";
 import ModalEdit from "../ModalEdit";
-import FilterSort from "../FilterSort";
+import SortInputs from "../SortInputs";
 import DateFilter from "../DateFilter";
 import api from "../../services/ApiService";
 import DoctorsContext from "../../contexts/DoctorsContext";
@@ -143,7 +143,7 @@ const Visits = () => {
           />
         )}
         <VisitInputs setVisits={setVisits} />
-        <FilterSort setSort={setSortData} sortBy={sortBy} />
+        <SortInputs setSort={setSortData} sortBy={sortBy} />
         <DateFilter
           dateRange={dateRange}
           setDateFilter={handleSetDateFilter}
