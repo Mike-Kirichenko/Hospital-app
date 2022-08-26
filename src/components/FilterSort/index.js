@@ -20,9 +20,13 @@ const FilterSort = ({ setSort, sortBy }) => {
           onChange={({ target }) => setSort({ sortKey: target.value })}
           value={sortKey}
         >
-          {sortOptions.map((option) => {
+          {sortOptions.map((option, index) => {
             const { label, value } = option;
-            return <option value={value}>{label}</option>;
+            return (
+              <option key={`sort-option-${index}`} value={value}>
+                {label}
+              </option>
+            );
           })}
         </select>
       </div>
@@ -35,8 +39,8 @@ const FilterSort = ({ setSort, sortBy }) => {
             value={sortDir}
             onChange={({ target }) => setSort({ sortDir: target.value })}
           >
-            {sortDirOptions.map((option) => (
-              <option>{option}</option>
+            {sortDirOptions.map((option, index) => (
+              <option key={`sort-option-${index}`}>{option}</option>
             ))}
           </select>
         </div>

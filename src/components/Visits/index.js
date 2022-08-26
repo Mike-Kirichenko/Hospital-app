@@ -84,7 +84,7 @@ const Visits = () => {
       if (sortDir === "DESC") sorted.reverse();
       setVisits(sorted);
     }
-  }, [sortBy, visits]);
+  }, [sortBy]);
 
   return (
     <main>
