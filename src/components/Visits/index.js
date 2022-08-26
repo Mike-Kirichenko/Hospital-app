@@ -3,6 +3,7 @@ import { Table } from "reactstrap";
 import ModalDelete from "../ModalDelete";
 import ModalEdit from "../ModalEdit";
 import FilterSort from "../FilterSort";
+import DateFilter from "../DateFilter";
 import api from "../../services/ApiService";
 import DoctorsContext from "../../contexts/DoctorsContext";
 import VisitInputs from "../VisitInputs";
@@ -32,6 +33,7 @@ const Visits = () => {
       });
 
     const doctors = api.getAllDoctors();
+
     doctors
       .then((data) => {
         setdoctors(data);
@@ -74,13 +76,13 @@ const Visits = () => {
     const { sortKey, sortDir } = sortBy;
 
     if (sortKey && sortDir) {
-      visits.sort((a, b) => {
+      const sorted = [...visits].sort((a, b) => {
         const aValue = sortKey === "doctor" ? a[sortKey].name : a[sortKey];
         const bValue = sortKey === "doctor" ? b[sortKey].name : b[sortKey];
         return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
       });
-      if (sortDir === "ASC") visits.reverse();
-      setVisits(visits);
+      if (sortDir === "DESC") sorted.reverse();
+      setVisits(sorted);
     }
   }, [sortBy, visits]);
 
@@ -104,6 +106,7 @@ const Visits = () => {
         )}
         <VisitInputs setVisits={setVisits} />
         <FilterSort setSort={setSortData} sortBy={sortBy} />
+        <DateFilter />
         {visits.length ? (
           <Table responsive id="visits-table">
             <thead>

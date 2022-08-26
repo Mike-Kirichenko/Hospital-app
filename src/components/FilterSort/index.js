@@ -4,10 +4,10 @@ const FilterSort = ({ setSort, sortBy }) => {
   const { sortKey, sortDir } = sortBy;
   const sortDirOptions = [null, "ASC", "DESC"];
   const sortOptions = [
-    [null, null],
-    ["patient_name", "Patient Name"],
-    ["date", "Date"],
-    ["doctor", "Doctor"],
+    { label: null, value: null },
+    { label: "Patient Name", value: "patient_name" },
+    { label: "Date", value: "date" },
+    { label: "Doctor", value: "doctor" },
   ];
 
   return (
@@ -16,13 +16,13 @@ const FilterSort = ({ setSort, sortBy }) => {
         <label htmlFor="name">Sort By</label>
         <select
           type="select"
-          className="filter-input"
+          className="info-input"
           onChange={({ target }) => setSort({ sortKey: target.value })}
           value={sortKey}
         >
           {sortOptions.map((option) => {
-            const [value, text] = option;
-            return <option value={value}>{text}</option>;
+            const { label, value } = option;
+            return <option value={value}>{label}</option>;
           })}
         </select>
       </div>
@@ -31,7 +31,7 @@ const FilterSort = ({ setSort, sortBy }) => {
           <label htmlFor="name">Sort Direction</label>
           <select
             type="select"
-            className="filter-input"
+            className="info-input"
             value={sortDir}
             onChange={({ target }) => setSort({ sortDir: target.value })}
           >

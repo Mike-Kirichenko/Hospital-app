@@ -58,7 +58,7 @@ const VisitInputs = ({ setVisits }) => {
             name="patient_name"
             placeholder="Patient name"
             id="name"
-            className="visit-input"
+            className="info-input"
             onInput={({ target }) =>
               setVisitPartials({ patient_name: target.value })
             }
@@ -71,7 +71,7 @@ const VisitInputs = ({ setVisits }) => {
             id="doctor"
             name="doctor"
             type="select"
-            className="visit-input"
+            className="info-input"
             onChange={({ target }) =>
               setVisitPartials({ doctor_id: parseInt(target.value) })
             }
@@ -98,7 +98,7 @@ const VisitInputs = ({ setVisits }) => {
             dateFormat="dd.MM.yyyy"
             selected={visitInpData.date}
             onChange={(date) => setVisitPartials({ date })}
-            className="visit-input"
+            className="info-input"
             value={date}
           />
         </div>
@@ -109,7 +109,7 @@ const VisitInputs = ({ setVisits }) => {
             placeholder="Add patient complaints"
             type="text"
             id="text"
-            className="visit-input"
+            className="info-input"
             onInput={({ target }) => setVisitPartials({ text: target.value })}
             value={text}
           />

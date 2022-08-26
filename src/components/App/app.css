@@ -49,3 +49,15 @@ main {
 .succ-msg {
   margin: 5% 0;
 }
+
+.main-icons {
+  cursor: pointer;
+}
+
+.info-input {
+  width: 100%;
+  height: 100%;
+  border: 0.1% solid black;
+  outline: 0.1% solid var(--inputs-color);
+  padding: 2.5% 0.5%;
+}
