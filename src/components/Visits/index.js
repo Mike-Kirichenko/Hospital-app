@@ -12,10 +12,9 @@ import VisitItem from "../VisitItem";
 import validateVisit from "../../helpers/validateVisit";
 import "./visits.scss";
 
-let visitsInitial;
-const tableHeadings = ["Name", "Doctor", "Date", "Complaints"];
-
 const Visits = () => {
+  const tableHeadings = ["Name", "Doctor", "Date", "Complaints"];
+  const [visitsInitial, setVisitsInitial] = useState([]);
   const [itemId, setItemToDeleteId] = useState(null);
   const [editItem, setItemToEdit] = useState({});
   const [visits, setVisits] = useState([]);
@@ -33,7 +32,7 @@ const Visits = () => {
     allVisits
       .then((data) => {
         setVisits(data);
-        visitsInitial = data;
+        setVisitsInitial(data);
       })
       .catch(() => {
         localStorage.removeItem("token");
@@ -69,7 +68,7 @@ const Visits = () => {
     visits.then((data) => {
       setItemToDeleteId(null);
       setFilterAndSortRelatedState(data);
-      visitsInitial = data;
+      setVisitsInitial(data);
     });
   };
 
@@ -83,7 +82,7 @@ const Visits = () => {
           setItemToEdit({});
           setErrors(null);
           setFilterAndSortRelatedState(data);
-          visitsInitial = data;
+          setVisitsInitial(data);
         })
         .catch((err) => {
           setErrors(err);

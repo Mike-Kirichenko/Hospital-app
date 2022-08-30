@@ -11,7 +11,7 @@ const DateFilter = ({
 
   return (
     <div id="dateFilter">
-      {filter && (
+      {filter ? (
         <>
           <div className="date-inp-wrapper">
             <label htmlFor="date-from">From</label>
@@ -45,18 +45,16 @@ const DateFilter = ({
               Filter by date
             </button>
           </div>
+          <div id="dateFilterLabel" onClick={() => setInitialData()}>
+            <i className="fa fa-trash-o edit-items" />
+          </div>
         </>
-      )}
-      {!filter ? (
+      ) : (
         <div id="dateFilterLabel">
           <b>Add filter by date</b>&nbsp;&nbsp;
           <span onClick={() => setDateFilter({ filter: true })}>
             <i className="fa fa-plus edit-items " aria-hidden="true" />
           </span>
-        </div>
-      ) : (
-        <div id="dateFilterLabel" onClick={() => setInitialData()}>
-          <i className="fa fa-trash-o edit-items" />
         </div>
       )}
     </div>
