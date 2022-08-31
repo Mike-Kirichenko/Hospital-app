@@ -1,32 +1,38 @@
 import { useState, useEffect } from "react";
+import moment from "moment";
 import { Table } from "reactstrap";
 import ModalDelete from "../ModalDelete";
 import ModalEdit from "../ModalEdit";
-import FilterSort from "../FilterSort";
+import SortInputs from "../SortInputs";
 import DateFilter from "../DateFilter";
 import api from "../../services/ApiService";
 import DoctorsContext from "../../contexts/DoctorsContext";
 import VisitInputs from "../VisitInputs";
 import VisitItem from "../VisitItem";
 import validateVisit from "../../helpers/validateVisit";
-
 import "./visits.scss";
 
-const tableHeadings = ["Name", "Doctor", "Date", "Complaints"];
-
 const Visits = () => {
+  const tableHeadings = ["Name", "Doctor", "Date", "Complaints"];
+  const [visitsInitial, setVisitsInitial] = useState([]);
   const [itemId, setItemToDeleteId] = useState(null);
   const [editItem, setItemToEdit] = useState({});
   const [visits, setVisits] = useState([]);
   const [sortBy, setSort] = useState({ sortKey: "", sortDir: "" });
   const [doctors, setdoctors] = useState([]);
-  const [errors, setErrors] = useState([]);
+  const [modalErrors, setErrors] = useState([]);
+  const [dateRange, setDateFilter] = useState({
+    filter: false,
+    dateFrom: "",
+    dateTo: "",
+  });
 
   useEffect(() => {
     const allVisits = api.allVisits();
     allVisits
       .then((data) => {
         setVisits(data);
+        setVisitsInitial(data);
       })
       .catch(() => {
         localStorage.removeItem("token");
@@ -43,11 +49,26 @@ const Visits = () => {
       });
   }, []);
 
+  /*
+    Here we select all new visits that match 
+    visits from last state, related to sorting/filtering. We update state with this new data,
+    Function is usually called after update or delete
+    */
+  const setFilterAndSortRelatedState = (data) => {
+    setVisits((oldVisits) => {
+      return data.filter((newVisits) => {
+        const found = oldVisits.findIndex((visit) => newVisits.id === visit.id);
+        return found > -1;
+      });
+    });
+  };
+
   const deleteVisit = () => {
     const visits = api.deleteVisit(itemId);
     visits.then((data) => {
-      setVisits(data);
       setItemToDeleteId(null);
+      setFilterAndSortRelatedState(data);
+      setVisitsInitial(data);
     });
   };
 
@@ -58,9 +79,10 @@ const Visits = () => {
       const visits = api.updateVisit(id, editItem);
       visits
         .then((data) => {
-          setVisits(data);
           setItemToEdit({});
           setErrors(null);
+          setFilterAndSortRelatedState(data);
+          setVisitsInitial(data);
         })
         .catch((err) => {
           setErrors(err);
@@ -70,6 +92,10 @@ const Visits = () => {
 
   const setSortData = (sortObj) => {
     setSort({ ...sortBy, ...sortObj });
+  };
+
+  const handleSetDateFilter = (dateRangeObj) => {
+    setDateFilter({ ...dateRange, ...dateRangeObj });
   };
 
   const sortVisits = () => {
@@ -83,6 +109,26 @@ const Visits = () => {
       if (sortDir === "DESC") sorted.reverse();
       setVisits(sorted);
     }
+  };
+
+  const handleDateFilter = () => {
+    const { dateFrom, dateTo } = dateRange;
+    if (dateFrom && dateTo) {
+      const formattedDateFrom = moment(dateFrom).format("YYYY-MM-DD");
+      const formattedDateTo = moment(dateTo).format("YYYY-MM-DD");
+      if (formattedDateTo >= formattedDateFrom) {
+        const filtered = visitsInitial.filter(
+          (visit) =>
+            visit.date >= formattedDateFrom && visit.date <= formattedDateTo
+        );
+        setVisits(filtered);
+      }
+    }
+  };
+
+  const handleSetInitialData = () => {
+    setVisits(visitsInitial);
+    setDateFilter({ filter: false, dateFrom: "", dateTo: "" });
   };
 
   useEffect(() => {
@@ -103,13 +149,19 @@ const Visits = () => {
             setItemToEdit={setItemToEdit}
             handleUpdateVisit={updateVisit}
             editItem={editItem}
-            errors={errors}
+            errors={modalErrors}
             setErrors={setErrors}
           />
         )}
         <VisitInputs setVisits={setVisits} />
-        <FilterSort setSort={setSortData} sortBy={sortBy} />
-        <DateFilter />
+        <SortInputs setSort={setSortData} sortBy={sortBy} />
+        <DateFilter
+          dateRange={dateRange}
+          setDateFilter={handleSetDateFilter}
+          startFilter={handleDateFilter}
+          setInitialData={handleSetInitialData}
+        />
+
         {visits.length ? (
           <Table responsive id="visits-table">
             <thead>
